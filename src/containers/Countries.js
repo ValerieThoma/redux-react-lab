@@ -5,12 +5,13 @@ import { bindActionCreators } from 'redux';
 
 
 class Countries extends Component{
+
 	
 	componentDidMount(){
 		console.log('component did mount')
 		var currentList = localStorage.getItem('list')
 		const json = JSON.parse(currentList, 10)//means parsing in decimal base
-		console.log("after parse from localStorage ", json, typeof(json))
+		console.log("from localStorage ", json, typeof(json))
 		if (json){ //if json exists and not null => run action to get history
 			this.props.getHistory(json);
 		}

@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddCountryAction from '../actions/AddCountryAction';
 import { bindActionCreators } from 'redux';
+import DeleteAllAction from '../actions/DeleteAllAction';
 
 
 class AddCountry extends Component{
 	constructor(){
 		super();
-		this.addCountry = this.addCountry.bind(this);	
+		this.addCountry = this.addCountry.bind(this);
+		this.deleteAll = this.deleteAll.bind(this);	
+	}
+
+
+	deleteAll(event){
+		// console.log('delete all')
+		const json = localStorage.clear();
+		console.log(json)
+		this.props.deleteall() // dispatching to action to delete
 	}
 
 
@@ -26,8 +36,9 @@ class AddCountry extends Component{
 			 <h1>Countries</h1>
 		        <form onSubmit={this.addCountry}>
 		          <input id="new-country" type="text" placeholder="add country"/>
-		          <button type="submit" className="btn btn-warning">ADD</button>
+		          <button type="submit" className="btn btn-primary">ADD</button>
 		        </form>
+		        <button type="submit" className="btn btn-danger" onClick={this.deleteAll}>Delete All</button>
 		    </div> 
 		)   
 	}	
@@ -35,7 +46,8 @@ class AddCountry extends Component{
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		 countries: AddCountryAction
+		deleteall: DeleteAllAction,
+		countries: AddCountryAction
 	},dispatch);
 }
 
