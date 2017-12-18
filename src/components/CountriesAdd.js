@@ -13,9 +13,11 @@ class AddCountry extends Component{
 
 	addCountry(event){
 		event.preventDefault();
-		const country = document.getElementById('new-country').value;
+		//for form we can use the following
+		// const country = document.getElementById('new-country').value;
+		let country = event.target[0].value.trim();//trip eliminates empty space on side
 		console.log(country);
-		this.props.countries(country);
+		(country) ? this.props.countries(country) : console.log('field is empty')
 	}
 
 	render(){

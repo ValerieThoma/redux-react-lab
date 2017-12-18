@@ -8,8 +8,8 @@ class Countries extends Component{
 	      return(<li key={index}>{country}</li>)
 	    })
 		return(
-			<div>
-				<li>{countryArray}</li>
+			<div className="big">
+				{countryArray}
 			</div>
 		)
 	}
