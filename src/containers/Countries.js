@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import AddCountryAction from '../actions/AddCountryAction';
+import GetHistory from '../actions/GetHistory';
+import { bindActionCreators } from 'redux';
+
 
 class Countries extends Component{
 	
@@ -9,11 +11,13 @@ class Countries extends Component{
 		var currentList = localStorage.getItem('list')
 		const json = JSON.parse(currentList, 10)//means parsing in decimal base
 		console.log("after parse from localStorage ", json, typeof(json))
+		if (json){ //if json exists and not null => run action to get history
+			this.props.getHistory(json);
+		}
 	}	
 
-
 	componentDidUpdate(){
-		console.log('componentDidUpdate current: ', this.props.countryList)
+		console.log("componentDidUpdate fired up")
 		if (this.props.countryList !== 0){
 		const json = JSON.stringify(this.props.countryList)
 		localStorage.setItem("list", json)
@@ -35,11 +39,15 @@ class Countries extends Component{
 function mapStateToProps(state){
 	return{
 		countryList: state.countries
-	}
-	
+	}	
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		getHistory: GetHistory
+	},dispatch);
 }
 
 
 
-
-export default connect(mapStateToProps)(Countries);
+export default connect(mapStateToProps, mapDispatchToProps)(Countries);
